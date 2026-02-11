@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will You Be My Valentine?</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', cursive;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Main Card */
+.container {
+    text-align: center;
+    background: rgba(255,255,255,0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 2;
+}
+
+h1, h2 {
+    color: #ff4d6d;
+}
+
+.buttons {
+    margin-top: 30px;
+    position: relative;
+    height: 100px;
+}
+
+button {
+    padding: 12px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#yesBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
+#noBtn {
+    background-color: gray;
+    color: white;
+    position: absolute;
+    left: 200px;
+}
+
+/* Love Page */
+#lovePage {
+    display: none;
+}
+
+.image-box img {
+    width: 250px;
+    border-radius: 20px;
+    margin-top: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+
+/* YES Effects */
+.effect {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUp 3s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-300px) scale(1.5); }
+}
+
+/* NO Images */
+.no-image {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 15px;
+    animation: pop 0.3s ease;
+    z-index: 5;
+}
+
+@keyframes pop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- FIRST PAGE -->
+<div class="container" id="mainPage">
+    <h1>Will You Be My Valentine? 💕</h1>
+    <div class="buttons">
+        <button id="yesBtn">Yes 💖</button>
+        <button id="noBtn">No 😢</button>
+    </div>
+</div>
+
+<!-- SECOND PAGE -->
+<div class="container" id="lovePage">
+    <h2>YAYYY!!! 💖✨</h2>
+    <p>You Got Me Already! 🌹</p>
+
+    <div class="image-box">
+        <!-- CHANGE THIS TO YOUR GIF -->
+        <img src="images/bear.gif" alt="Our Sweet Memory">
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const mainPage = document.getElementById("mainPage");
+const lovePage = document.getElementById("lovePage");
+
+/* NO BUTTON CLICK */
+noBtn.addEventListener("click", function() {
+
+    // Move button randomly
+    const x = Math.random() * 300;
+    const y = Math.random() * 200;
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    showNoImages();
+});
+
+/* YES BUTTON CLICK */
+yesBtn.addEventListener("click", function() {
+    mainPage.style.display = "none";
+    lovePage.style.display = "block";
+
+    startEffects();
+});
+
+/* YES EFFECTS */
+function startEffects() {
+    const symbols = ["💖", "✨", "⭐", "💗", "🌟"];
+
+    setInterval(() => {
+        const effect = document.createElement("div");
+        effect.classList.add("effect");
+        effect.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+
+        effect.style.left = Math.random() * window.innerWidth + "px";
+        effect.style.top = window.innerHeight - 50 + "px";
+        effect.style.fontSize = (20 + Math.random() * 30) + "px";
+
+        document.body.appendChild(effect);
+
+        setTimeout(() => {
+            effect.remove();
+        }, 3000);
+
+    }, 200);
+}
+
+/* NO IMAGES FUNCTION */
+function showNoImages() {
+
+    const imagePath = "sadimage/sad1.gif"; // CHANGE if needed
+
+    for (let i = 0; i < 10; i++) {
+
+        const img = document.createElement("img");
+        img.src = imagePath;
+        img.classList.add("no-image");
+
+        img.style.left = Math.random() * window.innerWidth + "px";
+        img.style.top = Math.random() * window.innerHeight + "px";
+
+        document.body.appendChild(img);
+
+        setTimeout(() => {
+            img.remove();
+        }, 2000);
+    }
+}
+</script>
+
+</body>
+</html>
